@@ -1,0 +1,70 @@
+model {
+  # Likelihood
+  for (i in 1:5610) {
+    
+    z1[i] ~ dnorm ( mu_z1[i], sigma_z1)
+    mu_z1[i] ~ dnorm (y[i] + alpha[1]*dejure_dummy[i] 
+                      + alpha[2]*infants[i]
+                      + alpha[3]*deaths[i]
+                      + alpha[4]*birthplace_dummy[i], sigma_mu_z1[quality[i]])
+  #Prior of true flows
+  y[i] ~ dnorm(mu_y[i], sigma_res) 
+    mu_y[i] <- beta[1] 
+    + beta[2]*cont_dummy[i]
+    
+    + beta[3]*popS[i] + beta[4]*popR[i]
+    + beta[5]*mstS[i] + beta[6]*mstR[i]
+    
+    + beta[7]*imports[i] + beta[8]*exports[i] 
+    + beta[9]*GDPS[i] + beta[10]*GDPR[i]
+    + beta[11]*unempS[i] + beta[12]*unempR[i]
+    
+    + beta[13]*pvS[i] + beta[14]*pvR[i]
+    
+    + beta[15]*schoolyS[i] + beta[16]*schoolyR[i]
+    + beta[17]*lifeexpectancyS[i] + beta[18]*lifeexpectancyR[i]
+    + beta[19]*language_dummy[i]
+    + beta[20]*year[i] + u0[corridor[i]] + u1[corridor[i]]*year[i]
+  }
+  
+  ### --- hyperprior for random effects ---### 
+  for (i in 1:170) {
+    u0[i] ~ dnorm(0, sigma_int) 
+    u1[i] ~ dnorm(0, sigma_slope1) 
+  }
+  
+  sigma_int ~ dnorm(0, 2)T(0,)
+  sigma_slope1 ~ dnorm(0, 2)T(0,)
+  sigma_res ~ dnorm(0, 2)T(0,)
+  
+  ### --- hyperprior for fixed effects ---### 
+  beta[1:20] ~ dmnorm.vcov(mu_beta[], Sigma_beta[,]) 
+  for (i in 1:20) {mu_beta[i] <- 0}
+  
+  for(i in 1:20){
+    Sigma_beta[i, i] <- sigma_beta[i] 
+    sigma_beta[i] ~ dnorm(0, 2)T(0,)
+  }
+  
+  for (i in 1:19)  {
+    for (j in (1+i):20){
+      Sigma_beta[j,i]   <- 0}       
+    
+    for (j in 1:i){
+      Sigma_beta[j, (i+1)]  <- 0}
+  }
+  
+  #Prior of ME variables
+  alpha[1] ~ dnorm(-0.166, 0.103)T(,0)
+  alpha[2] ~ dnorm(-0.073, 0.066)T(,0)
+  alpha[3] ~ dnorm(-0.005, 0.002)T(,0)
+  alpha[4] ~ dnorm(-0.793, 0.328)T(,0)
+  
+  # Prior of dispersion of observed values
+  for(i in 1:3){
+    sigma_mu_z1[i] ~ dnorm(0, 2)T(0,)
+  }
+  
+  sigma_z1 ~ dnorm(0, 2)T(0,)
+}
+
