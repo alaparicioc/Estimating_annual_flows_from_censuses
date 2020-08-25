@@ -13,7 +13,7 @@ R code to run JAGS code and obtain chains, summary statistics, prfs and ESS of p
 "JAGS_code_model.txt"
 This file contains the code of model in JAGS.
 
-"true_floes_estimates.csv"
+"true_flows_estimates.csv"
 Dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
 
 
