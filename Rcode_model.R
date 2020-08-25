@@ -13,8 +13,6 @@ library("dclone")
 library("parallel")
 #install.packages("rjags")
 library("rjags")
-library("R2jags")
-library("runjags")
 #install.packages("coda")
 library("coda")
 
@@ -53,7 +51,7 @@ coda.complMM <- jags.parfit(cl = cl,
 coda.trueflows <- jags.parfit(cl = cl,
                               data = census_data_model, 
                               params = c("y"), 
-                              model = "census_model.txt", 
+                              model = "./JAGS_code_model.txt", 
                               n.chains = 3, 
                               n.adapt = 50000, 
                               n.update = 50000,
