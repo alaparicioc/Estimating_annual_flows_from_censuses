@@ -1,4 +1,7 @@
-# Estimating_annual_flows_from_censuses
+# A Bayesian Approach to Estimate Annual Bilateral Migration Flows for South America Using Census Data
+
+Andrea Aparicio-Castro<sup>1*</sup>, Arkadiusz Wi\'{s}niowski<sup>1*</sup>, [Francisco Rowe](http://www.franciscorowe.com)[[`@fcorowe`](http://twitter.com/fcorowe)]<sup>2*</sup>
+
 This repository contains data and code related to the paper "Estimating annual bilateral migrant flows in South America through correcting for measurement errors in census data". The files are:
 
 "synthetic_data.csv"
