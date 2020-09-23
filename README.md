@@ -29,4 +29,6 @@ R code to run the JAGS code and obtain chains, summary statistics, prfs and ESS[
 > `true_flows_estimates.csv'[I am assuming this is the set of estimates you produced. If so, make this clearer]
 dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
 
+[Here would be good to add how the files should be used. Indicate the order in which they should be used first. Could also indicate this with a number at the end of the file name.]
+
 
