@@ -1,6 +1,6 @@
 # A Bayesian Approach to Estimate Annual Bilateral Migration Flows for South America Using Census Data
 
-Andrea Aparicio-Castro<sup>1*</sup>, [Arkadiusz Wiśniowski](https://www.research.manchester.ac.uk/portal/a.wisniowski.html)</sup>1</sup>, [Francisco Rowe](http://www.franciscorowe.com)[[`@fcorowe`](http://twitter.com/fcorowe)]<sup>2</sup>
+Andrea Aparicio-Castro<sup>1*</sup>, [Arkadiusz Wiśniowski](https://www.research.manchester.ac.uk/portal/a.wisniowski.html)<sup>1</sup>, [Francisco Rowe](http://www.franciscorowe.com)[[`@fcorowe`](http://twitter.com/fcorowe)]<sup>2</sup>
 
 <sup>1</sup> *University of Manchester, Manchester, United Kingdom*
 
