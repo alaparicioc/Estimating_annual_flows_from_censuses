@@ -8,7 +8,7 @@ Andrea Aparicio-Castro<sup>1*</sup>, [Arkadiusz Wiśniowski](https://www.researc
 
 This repository contains data and code implement the methodology proposed in our paper. It contains three folders and the following files:
 
-* `Data':
+# **Data**:
 
 > `synthetic_data.csv'
 Synthetic dataset to be used as input data for the model. Data use copyrights prevents from sharing the original data used for the modelling. However the original data can be obtained from different sources (see `Data sources.pdf'). Here we provide a synthetic dataset which is similar in structure to the original dataset. 
@@ -18,7 +18,7 @@ Document which list the sources of input data for estimating true migration flow
 
 
 
-* `Code':
+# **Code**:
 
 > `Rcode_creating_synthetic_data.R'
 R code to create the synthetic dataset in `synthetic_data.csv'
@@ -31,7 +31,7 @@ R code to run the JAGS code and obtain chains, summary statistics, Potential sca
 
 
 
-* `Output'
+# **Output**:
 
 > `true_flows_estimates.csv'
 Our estimated true migration flows, which conform a dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
