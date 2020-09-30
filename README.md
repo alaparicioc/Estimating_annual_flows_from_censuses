@@ -34,8 +34,8 @@ R code to run the JAGS code and obtain chains, summary statistics, Potential sca
 ## **output**
 
 > `true_flows_estimates.csv`:
-Our estimated true migration flows, which conform a dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
+Our estimated true migration flows comprise a dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
 
-In order to estimate true migration flows, one needs to create a working directory whit the files named `synthetic_data.csv`, `JAGS_code_model.txt` and `Rcode_model.R`. The last file calls the input data (`synthetic_data.csv`) and the code from JAGS (`JAGS_code_model.txt`).
+To estimate true migration flows, execute the `Rcode_model.R` which calls the input data `synthetic_data.csv` and code from JAGS `JAGS_code_model.txt`.
 
 
