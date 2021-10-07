@@ -38,6 +38,6 @@ R code to run the JAGS code and obtain chains, summary statistics, Potential sca
 > `true_flows_estimates.csv`:
 Our estimated true migration flows comprise a dataset of 5610 observations and six variables (Origin, Destination, year, mean_trueflows, q2.5_trueflows, q97.5_trueflows).
 
-To estimate true migration flows, execute the `Rcode_model.R` which calls the input data `synthetic_data.csv` and code from JAGS `JAGS_code_model.txt`.
+To estimate true migration flows, execute the `Rcode_model.R` which calls the input data `synthetic_data.csv` and code from JAGS `JAGS_code_model.txt`. Bear in mind that the resulted MCMC file for the measurement error model is around 777KB, while the file which contains the true flow chains is approximately 5000KB. The model takes nearly 17 hours to run with default settings.
 
 
