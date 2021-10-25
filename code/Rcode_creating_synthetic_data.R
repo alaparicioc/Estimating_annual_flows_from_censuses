@@ -40,7 +40,8 @@ data <- data.frame(Origin = rep(c("Argentina", "Bolivia", "Brazil", "Chile", "Co
         select(-equal) %>%
         mutate( N = 1:5610,
                 corridor = rep(1:170, 33),
-                z1 = rnorm(5610, 6.077116, 1.847595),
+                z5 = rnorm(5610, 11466, 43441.39), 
+                proportion = rnorm(5610, 0.08737133),
                 dejure_dummy = rbinom(5610, 1, 0.1545455),
                 infants = rnorm(5610, 1.447062, 2.074823),
                 deaths = rnorm(5610, 0.6463813, 1.110767),
