@@ -35,28 +35,24 @@ parLoadModule(cl, "dic")
 
 coda.complMM <- jags.parfit(cl = cl,
                             data = census_data_model, 
-                            params = c("sigma_z1", "sigma_mu_z1",
-                                       "alpha",
-                                       "beta", 
-                                       "sigma_int", "sigma_slope1", "sigma_res", 
-                                       "deviance"), 
-                            #Include path where "JAGS_code_model.txt" file is
-                            model = "./JAGS_code_model.txt",   
+                            params = c("sigma_y1res", "alpha", "alpha0", "phi", "beta", "sigma_res", "sigma_b"),
+                            model = "./JAGS_code_model.txt", 
                             n.chains = 3, 
-                            n.adapt = 50000, 
-                            n.update = 50000,
-                            n.iter = 550000, 
-                            thin = 500)
+                            n.adapt = 30000, 
+                            n.update = 30000,
+                            n.iter = 50000, 
+                            thin = 600)
+
 
 coda.trueflows <- jags.parfit(cl = cl,
                               data = census_data_model, 
                               params = c("y"), 
                               model = "./JAGS_code_model.txt", 
                               n.chains = 3, 
-                              n.adapt = 50000, 
-                              n.update = 50000,
-                              n.iter = 550000, 
-                              thin = 500)
+                              n.adapt = 30000, 
+                              n.update = 30000,
+                              n.iter = 50000, 
+                              thin = 600)
 s1 <- Sys.time() - s0
 s1
 stopCluster(cl)
