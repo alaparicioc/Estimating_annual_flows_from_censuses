@@ -8,7 +8,7 @@ Andrea Aparicio-Castro<sup>1*</sup>, [Arkadiusz Wiśniowski](https://www.researc
 
 <sup>2</sup> *Geographic Data Science Lab, University of Liverpool, Liverpool, United Kingdom*
 
-This repository contains data and code implement the methodology proposed in our paper. It contains three folders and the following files:
+This repository contains data and code implementing the methodology proposed in our paper, in addition to selected outputs. It contains three folders and the following files:
 
 ## **data**
 
