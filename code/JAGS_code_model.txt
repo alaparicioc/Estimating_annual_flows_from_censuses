@@ -1,74 +1,110 @@
 model {
+  ########################
   # Likelihood
-  for (i in 1:5610) {
+  ########################
+  for (i in census_data_cov) {
     
-    z5[i] ~ dpois ( exp(z1[i])%*%proportion[i])
-    z1[i] ~ dnorm (y[i] + alpha[1]*dejure_dummy[i] 
-                      + alpha[2]*infants[i]
-                      + alpha[3]*deaths[i]
-                      + alpha[4]*birthplace_dummy[i], sigma_mu_z1[quality[i]])
+    y5residence[i] ~ dpois( exp(ln_y1res[i])%*%ratios.five.to.one2[i])
+    
+    ln_y1res[i] ~ dnorm ( y[i] + 
+                                alpha[1]*dejure_dummy[i] + 
+                                alpha[2]*infants[i] +
+                                alpha[3]*deaths[i] +
+                                alpha[4]*birthplace_dummy[i], tau_y1res[quality1[i]])
+
+    ratios.five.to.one2[i] ~ dnorm(ratios.five.to.one1[i], tau_ratio)T(0,)  
+}
+
+  ###########################
   #Prior of true flows
-  y[i] ~ dnorm(mu_y[i], sigma_res) 
-  mu_y[i] <- b[corridor[i]]}
-        
-  b[1] ~ dnorm(alpha0 + ar_mean[1] + reg_mean[1], sigma_b)
-  ar_mean[1] <- phi*b0
-  reg_mean[1] <- beta[1]*cont_dummy[1]
-               + beta[2]*popS[1] + beta[3]*popR[1]
-               + beta[4]*mstS[1] + beta[5]*mstR[1]
-               + beta[6]*imp[1] + beta[7]*exports1[1] 
-               + beta[8]*GDPS[1] + beta[9]*GDPR[1]
-               + beta[10]*unempS[1] + beta[11]*unempR[1]
-               + beta[12]*pvS[1] + beta[13]*pvR[1]
-               + beta[14]*schoolyS[1] + beta[15]*schoolyR[1]
-               + beta[16]*lifeexpectancyS[1] + beta[17]*lifeexpectancyR[1]
-               + beta[18]*language_dummy[1]
+  ###########################
+  #first year
+  for(t in 1:170){
+    y[t] ~ dnorm(mu_y[t], tau_y) 
 
-  for(t in 2:170) {
-      b[t] ~ dnorm(alpha0 + ar_mean[t] + reg_mean[t], sigma_b)
-      ar_mean[t] <- phi*b[t-1]
-      reg_mean[t] <- beta[1]*cont_dummy[t]
-                     + beta[2]*popS[t] + beta[3]*popR[t]
-                     + beta[4]*mstS[t] + beta[5]*mstR[t]
-                     + beta[6]*imp[t] + beta[7]*exports1[t] 
-                     + beta[8]*GDPS[t] + beta[9]*GDPR[t]
-                     + beta[10]*unempS[t] + beta[11]*unempR[t]
-                     + beta[12]*pvS[t] + beta[13]*pvR[t]
-                     + beta[14]*schoolyS[t] + beta[15]*schoolyR[t]
-                     + beta[16]*lifeexpectancyS[t] + beta[17]*lifeexpectancyR[t]
-                     + beta[18]*language_dummy[t]}
+    mu_y[t] <- u0[corridor[t]] +
 
-  alpha0 ~ dnorm(0, 0.0025)
-  phi ~ dnorm(0, 0.0025)T(0,)
-  sigma_res ~ dnorm(0, 0.005)T(0,)
-  sigma_b ~ dnorm(0, 0.0025)T(0,)
-  b0 ~ dnorm(0, 0.0025)
+      beta[1]*cont_dummy[t] +
 
-  ### --- hyperprior for fixed effects ---### 
-  beta[1:18] ~ dmnorm.vcov(mu_beta[], Sigma_beta[,]) 
-  for (i in 1:18) {mu_beta[i] <- 0}
+      beta[6]*ln_exports[t] + beta[7]*ln_imports[t] +
+
+      beta[8]*lnratio_gdppc[t] +
+      beta[10]*lnratio_unemp[t] +
+
+      beta[12]*pvR[t] +
+      beta[14]*pvS[t] + 
+
+      beta[16]*schoolyR[t] + beta[17]*schoolyS[t] +
+
+      beta[18]*lnratio_lifeexpectancy[t] +
+
+      beta[19]*language_dummy[t]
+}
   
-  for(i in 1:18){
-    Sigma_beta[i, i] <- sigma_beta[i] 
-    sigma_beta[i] ~ dnorm(0, 0.5)T(0,)
-  }
-  
-  for (i in 1:17)  {
-    for (j in (1+i):18){
-      Sigma_beta[j,i]   <- 0}       
+  for(t in 171:5780){
+    y[t] ~ dnorm(mu_y[t], tau_y) 
     
-    for (j in 1:i){
-      Sigma_beta[j, (i+1)]  <- 0}
-  }
-  
-  #Prior of ME variables
-  alpha[1] ~ dnorm(-0.166, 0.103)T(,0)
-  alpha[2] ~ dnorm(-0.073, 0.066)T(,0)
-  alpha[3] ~ dnorm(-0.005, 0.002)T(,0)
-  alpha[4] ~ dnorm(-0.793, 0.328)T(,0)
-  
-  # Prior of dispersion of observed values
-  for(i in 1:3){
-    sigma_mu_z1[i] ~ dnorm(0, 0.5)T(0,)
-  }
+    mu_y[t] <- u0[corridor[t]] + u1[corridor[t]]*y[t-1] +
+      
+      beta[1]*cont_dummy[t] +
 
+      beta[2]*ln_popR[t-1] + beta[3]*ln_popS[t-1] +
+      beta[4]*ln_mstR[t-1] + beta[5]*ln_mstS[t-1] +
+      
+      beta[6]*ln_imports[t] + beta[7]*ln_exports[t] +
+
+      beta[8]*lnratio_gdppc[t] + beta[9]*lnratio_gdppc[t-1] +
+      beta[10]*lnratio_unemp[t] + beta[11]*lnratio_unemp[t-1] +  
+
+      beta[12]*schoolyR[t] + beta[13]*schoolyS[t] +      
+
+      beta[14]*lnratio_lifeexpectancy[t] +
+      
+      beta[15]*pvR[t] + beta[16]*pvR[t-1] + 
+      beta[17]*pvS[t] + beta[18]*pvS[t-1] +  
+
+      beta[19]*language_dummy[t]
+}
+  
+  ###########################
+  #Prior of MM variables
+  ###########################
+  for(j in 1:170) { 
+    u0[j] ~ dnorm(0, 12)
+    u1[j] ~ dnorm(0, 12)
+    }
+ 
+  tau_int <- 1/pow(sigma_int, 2)
+  sigma_int ~ dgamma(3, 2)
+  
+  tau_slope <- 1/pow(sigma_slope, 2)
+  sigma_slope ~ dgamma(3, 2)
+  
+  tau_y <- 1/pow(sigma_y, 2)
+  sigma_y ~ dgamma(3, 2)
+  
+  for(i in 1:19){
+  beta[i] ~ dnorm(0, 0.5) }
+  
+  ###########################
+  #Prior of ME variables
+  ###########################
+  alpha[1] ~ dnorm(0, 0.5)T(,0)
+  alpha[2] ~ dnorm(0, 0.5)T(,0)
+  alpha[3] ~ dnorm(0, 0.5)T(,0)
+  alpha[4] ~ dnorm(0, 0.5)T(,0)
+   
+  tau_ratio <- 1/pow(sigma_ratio, 2) 
+  sigma_ratio ~ dgamma(10, 2)
+  #################################################
+  # Prior of dispersion of observed values
+  ################################################
+  for(i in 1:3){
+    tau_y1res[i] <- 1/pow(sigma_y1res[i], 2) 
+    sigma_y1res[i] ~ dgamma(3, 2)
+  }
+  
+  constraint1 ~ dinterval(tau_y1res[3] - tau_y1res[2], 0)
+  constraint2 ~ dinterval(tau_y1res[2] - tau_y1res[1], 0)
+ 
+}
